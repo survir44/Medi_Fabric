@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_profile"
+
+            android:title="My Profile" />
+<!--        android:icon="@drawable/ic_description_minutes"-->
+        <item
+            android:id="@+id/nav_activity_manager"
+
+            android:title="Activity Manager" />
+
+
+        <item
+            android:id="@+id/nav_developers"
+
+            android:title="Developers" />
+    </group>
+
+    <item android:title="Others">
+        <menu>
+            <item
+                android:id="@+id/nav_Feedback"
+
+                android:title="Feedback" />
+            <item
+                android:id="@+id/nav_about_us"
+
+                android:title="About us" />
+            <item
+                android:id="@+id/log_out"
+
+                android:title="Log Out" />
+        </menu>
+    </item>
+
+</menu>

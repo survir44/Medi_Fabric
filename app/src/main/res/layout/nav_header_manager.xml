@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/side_nav_bar"
+    android:gravity="bottom"
+    android:orientation="vertical"
+    android:theme="@style/ThemeOverlay.AppCompat.Dark">
+
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:id="@+id/imageView"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:maxHeight="50dp"
+        android:maxWidth="50dp"
+        android:layout_marginTop="15dp"
+        android:paddingTop="1dp"
+        android:scaleType="centerCrop"
+        app:srcCompat="@drawable/ic_launcher_background"
+        tools:ignore="VectorDrawableCompat"
+
+        />
+
+    <TextView
+        android:id="@+id/uname_final"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="string/nav_header_title"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+
+    <TextView
+        android:id="@+id/uid_final"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="string/nav_header_subtitle" />
+
+    <TextView
+        android:id="@+id/uroll_final"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="string/nav_header_subtitle" />
+
+</LinearLayout>
