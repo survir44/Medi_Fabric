@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".RegisterActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="10dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Name"
+                android:textSize="15dp"
+                android:paddingBottom="10dp"
+                >
+            </TextView>
+
+            <EditText
+                android:id="@+id/name_r"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="#F0F0F0"
+                android:drawablePadding="10dp"
+                android:hint="Name"
+                android:inputType="text"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="email address"
+                android:textSize="15dp"
+                android:paddingBottom="10dp"
+                >
+            </TextView>
+
+            <EditText
+                android:id="@+id/email_r"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="#F0F0F0"
+                android:drawablePadding="10dp"
+                android:hint="User email"
+                android:inputType="textEmailAddress"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Address"
+                android:textSize="15dp"
+                android:paddingBottom="10dp"
+                >
+            </TextView>
+
+            <EditText
+                android:id="@+id/address_r"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:background="#F0F0F0"
+                android:drawablePadding="10dp"
+                android:hint="Address"
+                android:inputType="text"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Contact Number"
+                android:textSize="15dp"
+                android:paddingBottom="10dp"
+                >
+            </TextView>
+
+            <EditText
+                android:id="@+id/phone_number_r"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="#F0F0F0"
+                android:drawablePadding="10dp"
+                android:hint="Contact Number"
+                android:inputType="number"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Gender"
+                android:textSize="15dp"
+                android:paddingBottom="10dp"
+                >
+            </TextView>
+
+            <androidx.appcompat.widget.AppCompatSpinner
+                android:id="@+id/gender_spinner_r"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="#F0F0F0"
+                android:drawablePadding="10dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Date Of Birth"
+                android:textSize="15dp"
+                android:paddingBottom="10dp"
+                >
+            </TextView>
+
+            <EditText
+                android:id="@+id/dob_r"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="#F0F0F0"
+                android:drawablePadding="10dp"
+                android:hint="Date of Birth"
+                android:inputType="date"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Password"
+                android:textSize="15dp"
+                android:paddingBottom="10dp"
+                >
+            </TextView>
+
+            <EditText
+                android:id="@+id/password_r"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="#F0F0F0"
+                android:drawablePadding="10dp"
+                android:hint="1 digit, 1 special character"
+                android:inputType=""
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <TextView
+                android:id="@+id/confirm_password_r"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Confirm Password"
+                android:textSize="15dp"
+                android:paddingBottom="10dp"
+                >
+            </TextView>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="#F0F0F0"
+                android:drawablePadding="10dp"
+                android:hint="re-enter password"
+                android:inputType=""
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone"
+            android:padding="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textSize="15dp"
+                android:paddingBottom="10dp"
+                >
+            </TextView>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="#F0F0F0"
+                android:drawablePadding="10dp"
+                android:hint=""
+                android:inputType=""
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"/>
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/Register_button_r"
+            android:layout_width="match_parent"
+            android:layout_height="49dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:text="Register"
+            android:textColor="#ffffff"
+            android:textSize="19sp"/>
+
+
+    </LinearLayout>
+
+
+</androidx.core.widget.NestedScrollView>

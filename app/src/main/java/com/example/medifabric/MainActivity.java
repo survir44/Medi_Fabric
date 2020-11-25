@@ -21,20 +21,34 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        //contact us button code
        FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                Snackbar.make(view, "Contact Us", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
         });
+
+        //login button code
         Button login_button = findViewById(R.id.Login_button);
         login_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent manager = new Intent(MainActivity.this, Manager.class);
                 String UROLE="", USERNAME="", ProfileURL="";
+                startActivity(manager);
+
+            }
+        });
+
+        //register button code
+        Button register_button = findViewById(R.id.Register_button);
+        register_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent manager = new Intent(MainActivity.this, RegisterActivity.class);
                 startActivity(manager);
 
             }
