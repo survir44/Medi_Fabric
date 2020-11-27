@@ -194,7 +194,7 @@
                 android:background="#F0F0F0"
                 android:drawablePadding="10dp"
                 android:hint="1 digit, 1 special character"
-                android:inputType=""
+                android:inputType="textPassword"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"/>
         </LinearLayout>
@@ -206,7 +206,7 @@
             android:padding="10dp">
 
             <TextView
-                android:id="@+id/confirm_password_r"
+
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Confirm Password"
@@ -216,12 +216,13 @@
             </TextView>
 
             <EditText
+                android:id="@+id/confirm_password_r"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:background="#F0F0F0"
                 android:drawablePadding="10dp"
                 android:hint="re-enter password"
-                android:inputType=""
+                android:inputType="textPassword"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"/>
         </LinearLayout>
