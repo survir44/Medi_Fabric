@@ -30,9 +30,33 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Spliterator;
+import java.util.regex.Pattern;
+
+import javax.net.ssl.SSLSocketFactory;
+import java.security.cert.CertificateFactory;
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.io.*;
+import java.security.cert.Certificate;
+import javax.security.cert.X509Certificate;
+import java.security.KeyStore;
+import java.security.*;
+import javax.net.ssl.TrustManagerFactory;
+import javax.net.ssl.*;
+import java.security.cert.*;
+import java.security.cert.CertificateException;
+import java.security.NoSuchAlgorithmException;
+import 	java.io.FileNotFoundException;
+import com.android.volley.toolbox.HurlStack;
+
+import com.example.medifabric.SharedPreferenceConfig;
+
+
+
 
 
 public class RegisterActivity extends AppCompatActivity {
@@ -40,14 +64,23 @@ public class RegisterActivity extends AppCompatActivity {
     private List<String> gender_list;
     private AppCompatSpinner gender_spinner;
     private Button register;
-    private String server_url="https://165.22.210.37:8000"; //Main Server URL
+    private String server_url="http://134.209.152.226:8000"; //Main Server URL
     private String uname="",uemail="",uaddress="",ucontact="",ugender="",udob="",upass="",uconfirmpass="",uage="22";
     private EditText uname_r,uemail_r,uaddress_r,uconatct_r,udob_r,upass_r,uconfirm_r;
+    String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
+    Pattern date_pattern = Pattern.compile("[0-9]{4}-[0-9]{2}-[0-9]{2}");
+    private SharedPreferences mpref;
+    private SharedPreferenceConfig preferenceConfig;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+
+        preferenceConfig = new SharedPreferenceConfig(getApplicationContext());
+        mpref=getSharedPreferences("",MODE_PRIVATE);
 
         uname_r = (EditText) findViewById(R.id.name_r);
         uemail_r = (EditText) findViewById(R.id.email_r);
@@ -57,6 +90,7 @@ public class RegisterActivity extends AppCompatActivity {
         upass_r = (EditText) findViewById(R.id.password_r);
         uconfirm_r = (EditText) findViewById(R.id.confirm_password_r);
 
+
         //set spinner array
         gender_list = new ArrayList<>();
         gender_list.add("Male");
@@ -65,6 +99,9 @@ public class RegisterActivity extends AppCompatActivity {
         ArrayAdapter adapter =new ArrayAdapter<>(RegisterActivity.this, android.R.layout.simple_list_item_1, gender_list);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         gender_spinner.setAdapter(adapter);
+
+//
+
 
         //register button
         register=(Button) findViewById(R.id.Register_button_r);
@@ -87,16 +124,24 @@ public class RegisterActivity extends AppCompatActivity {
                     Toast.makeText(RegisterActivity.this, "Enter Name", Toast.LENGTH_SHORT).show();
                 }else if(uemail.length()==0){
                     Toast.makeText(RegisterActivity.this,"Enter Email address",Toast.LENGTH_SHORT).show();
+                }else if (! (uemail.matches(emailPattern))) {
+                    Toast.makeText(RegisterActivity.this,"Enter Valid Email address",Toast.LENGTH_SHORT).show();
                 }else if(uaddress.length()==0){
                     Toast.makeText(RegisterActivity.this,"Enter Address",Toast.LENGTH_SHORT).show();
                 }else if(ucontact.length()==0){
                     Toast.makeText(RegisterActivity.this,"Enter Contact Number",Toast.LENGTH_SHORT).show();
+                }else if(ucontact.length()!=10){
+                    Toast.makeText(RegisterActivity.this,"Enter Valid Contact Number",Toast.LENGTH_SHORT).show();
                 }else if(ugender.length()==0){
                     Toast.makeText(RegisterActivity.this,"Enter Gender",Toast.LENGTH_SHORT).show();
                 }else if(udob.length()==0){
                     Toast.makeText(RegisterActivity.this,"Enter Date of Birth",Toast.LENGTH_SHORT).show();
+                }else if(!date_pattern.matcher(udob).matches()){
+                    Toast.makeText(RegisterActivity.this,"Enter Valid Date YYYY-MM-DD",Toast.LENGTH_SHORT).show();
                 }else if(upass.length()==0){
                     Toast.makeText(RegisterActivity.this,"Enter Password",Toast.LENGTH_SHORT).show();
+                }else if(upass.length()<8){
+                    Toast.makeText(RegisterActivity.this,"Password too short \n minimum 8 characters",Toast.LENGTH_SHORT).show();
                 }else if(uconfirmpass.length()==0){
                     Toast.makeText(RegisterActivity.this,"Confirm password feild empty ",Toast.LENGTH_SHORT).show();
                 }else if(!upass.equals(uconfirmpass)){
@@ -108,12 +153,16 @@ public class RegisterActivity extends AppCompatActivity {
         });
 
 
+
     }
+
+
     
     private void createJson_send(){
 
         final JSONObject jsonObject = new JSONObject();
         try {
+            Log.i("volleyABC", "Creating jason");
             jsonObject.put("name", uname);
             jsonObject.put("email", uemail);
             jsonObject.put("gender", ugender);
@@ -132,26 +181,39 @@ public class RegisterActivity extends AppCompatActivity {
         final String requestBody = jsonObject.toString();
         Log.i("volleyABC", requestBody);
 
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, server_url, new Response.Listener<String>() {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, server_url+"/register", new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 Log.i("volleyABC", "onResponse:edit reached "+response);
-                Toast.makeText(RegisterActivity.this,"got response"+response,Toast.LENGTH_SHORT).show();
+                Toast.makeText(RegisterActivity.this,"Registred Succesfully",Toast.LENGTH_SHORT).show();
+                preferenceConfig.writeLoginStatus(true,uemail,upass,uemail,ucontact,uaddress,ugender,udob);
+                    SharedPreferences.Editor editor=mpref.edit();
+                    editor.putString("useremail",uemail);
+                    editor.putString("password",upass);
+                    editor.putString("usercontact",ucontact);
+                    editor.putString("useraddress",uaddress);
+                    editor.putString("usergender",ugender);
+                    editor.putString("userdob",udob);
+                    editor.apply();
+                    Intent manager = new Intent(RegisterActivity.this, Manager.class);
+                    startActivity(manager);
+                    finish();
                 
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 try{
-                    //String statusCode = String.valueOf(error.networkResponse.statusCode);
-                    Log.i("volleyABC" ,"edit"+Integer.toString(error.networkResponse.statusCode));
-                    Toast.makeText(RegisterActivity.this,"Invalid api call",Toast.LENGTH_SHORT).show();
+//                    String statusCode = String.valueOf(error.networkResponse.statusCode);
+                    Log.i("volleyABC" ,"volley error"+error.toString());
+                    if(error.networkResponse.statusCode==400) {
+                        Toast.makeText(RegisterActivity.this, "Email already Registred!!", Toast.LENGTH_SHORT).show();
+                    }
                     error.printStackTrace();}
                 catch (Exception e)
                 {
-                    Log.i("volleyABC" ,"exception");
+                    Log.i("volleyABC" ,"exception"+e.toString());
                     Toast.makeText(RegisterActivity.this,"Check Network",Toast.LENGTH_SHORT).show();}
-
             }
         }){
 
@@ -167,11 +229,91 @@ public class RegisterActivity extends AppCompatActivity {
 
             @Override
             public String getBodyContentType() {
-                return "application/json; charset=utf-8";
+                return "application/json";
             }
         };
         RequestQueue requestQueue= Volley.newRequestQueue(this);
+//        RequestQueue requestQueue= Volley.newRequestQueue(this, new HurlStack(null, getSocketFactory()));
         requestQueue.add(stringRequest);
+    }
+
+    private SSLSocketFactory getSocketFactory() {
+
+        CertificateFactory cf = null;
+        try {
+
+            cf = CertificateFactory.getInstance("X.509");
+            InputStream caInput = getResources().openRawResource(R.raw.cert_name);
+            Certificate ca;
+            try {
+
+                ca = cf.generateCertificate(caInput);
+//                Log.e("CERT", "ca=" + ((X509Certificate) ca).getSubjectDN());
+            } finally {
+                caInput.close();
+            }
+
+
+            String keyStoreType = KeyStore.getDefaultType();
+            KeyStore keyStore = KeyStore.getInstance(keyStoreType);
+            keyStore.load(null, null);
+            keyStore.setCertificateEntry("ca", ca);
+
+
+            String tmfAlgorithm = TrustManagerFactory.getDefaultAlgorithm();
+            TrustManagerFactory tmf = TrustManagerFactory.getInstance(tmfAlgorithm);
+            tmf.init(keyStore);
+
+
+            HostnameVerifier hostnameVerifier = new HostnameVerifier() {
+                @Override
+                public boolean verify(String hostname, SSLSession session) {
+
+                    Log.e("CipherUsed", session.getCipherSuite());
+//                    return hostname.compareTo("134.209.152.226")==0; //The Hostname of your server.
+                    return  true;
+
+                }
+            };
+
+
+            HttpsURLConnection.setDefaultHostnameVerifier(hostnameVerifier);
+            SSLContext context = null;
+            context = SSLContext.getInstance("TLS");
+
+//            HttpsURLConnection.setDefaultHostnameVerifier((hostname, sslSession) -> {
+//                if(hostname.equals("134.209.152.226")) return true;
+//                return false;
+//            });
+
+            context.init(null, tmf.getTrustManagers(), null);
+            HttpsURLConnection.setDefaultSSLSocketFactory(context.getSocketFactory());
+
+            SSLSocketFactory sf = context.getSocketFactory();
+
+
+            return sf;
+
+        } catch (CertificateException e) {
+            e.printStackTrace();
+        }
+         catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        catch (KeyStoreException e) {
+            e.printStackTrace();
+        }
+        catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+        catch (KeyManagementException e) {
+            e.printStackTrace();
+        }
+
+        return  null;
     }
 
 

@@ -166,7 +166,7 @@
                 android:layout_height="40dp"
                 android:background="#F0F0F0"
                 android:drawablePadding="10dp"
-                android:hint="Date of Birth"
+                android:hint="YYYY-MM-DD"
                 android:inputType="date"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"/>
@@ -193,7 +193,7 @@
                 android:layout_height="40dp"
                 android:background="#F0F0F0"
                 android:drawablePadding="10dp"
-                android:hint="1 digit, 1 special character"
+                android:hint="Minimum 8 Character"
                 android:inputType="textPassword"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"/>

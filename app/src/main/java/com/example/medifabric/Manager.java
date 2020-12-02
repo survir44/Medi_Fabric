@@ -25,6 +25,7 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.google.android.material.navigation.NavigationView;
+import com.example.medifabric.SharedPreferenceConfig;
 
 
 //This contains java code for navigation drawer activity
@@ -41,6 +42,7 @@ public class Manager extends AppCompatActivity implements NavigationView.OnNavig
     View mView;
     ImageView imageView;
     Handler handler;
+    SharedPreferenceConfig preferenceConfig;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +50,7 @@ public class Manager extends AppCompatActivity implements NavigationView.OnNavig
         setContentView(R.layout.activity_manager);
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setCheckedItem(R.id.nav_activity_manager);
-//        preferenceConfig = new SharedPreferenceConfig(getApplicationContext());  //....6/6/2019
+        preferenceConfig = new SharedPreferenceConfig(getApplicationContext());  //....6/6/2019
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -56,17 +58,15 @@ public class Manager extends AppCompatActivity implements NavigationView.OnNavig
         //get data sent by Mainactivity.java startsact
         Intent intent = getIntent();
 //        uid = intent.getStringExtra(MainActivity.EXTRA_UID);
-//        uid=preferenceConfig.readLoginStatus();
+        uid=preferenceConfig.readLoginStatus();
         uid="test";
         Log.i("tracking uid","manager when received "+uid);
 
-//        uname = intent.getStringExtra(MainActivity.EXTRA_UNAME);
-//        uname=preferenceConfig.readNameStatus();
-//        urole = intent.getStringExtra(MainActivity.EXTRA_UROLE);
-//        urole=preferenceConfig.readRoleStatus();
-//        uProfile = intent.getStringExtra(MainActivity.EXTRA_URL);
-//        uProfile=preferenceConfig.readUrlStatus();
-        uname=urole=uProfile="tets";
+
+        uname=preferenceConfig.read_userid();
+        urole=preferenceConfig.read_email();
+        uProfile=preferenceConfig.read_contact();
+//        uname=urole=uProfile="tets";
         Log.i("tracking uid","manager when received "+uid+uname+urole+uProfile);
         //get data sent by Mainactivity.java ends
 
@@ -200,7 +200,7 @@ public class Manager extends AppCompatActivity implements NavigationView.OnNavig
 
         } else if (id == R.id.log_out) {
             //....6/6/2019
-//            preferenceConfig.writeLoginStatus(false,"","","","","");
+            preferenceConfig.writeLoginStatus(false,uname,"",uname,"","","","");
             startActivity(new Intent(this, MainActivity.class));
             finish();
             //....6/6/2019
