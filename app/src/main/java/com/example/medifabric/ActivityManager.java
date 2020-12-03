@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -16,13 +17,15 @@ import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
+import com.example.medifabric.fragments.Report_section;
+
 import java.util.Objects;
 import java.util.TimerTask;
 
 
 public class ActivityManager extends Fragment {
 
-    String roll_text;
+    String roll_text="";
 
     View rootView;
     GridLayout mainGrid;
@@ -54,7 +57,6 @@ public class ActivityManager extends Fragment {
 //        Log.i("Sanket_testing",bundle.toString());
 //        roll_text = this.getArguments().getString("uRole");
 //        preferenceConfig = new SharedPreferenceConfig(getActivity().getApplicationContext());
-        roll_text="test";
 
         sliderDotsPanel = (LinearLayout) rootView.findViewById(R.id.SliderDots);
 
@@ -62,8 +64,6 @@ public class ActivityManager extends Fragment {
 
         //set Event
         setSingleEvent(mainGrid);
-
-
         return rootView;
 
     }
@@ -197,10 +197,20 @@ public class ActivityManager extends Fragment {
             cardView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    //Toast.makeText(getActivity(), "Clicked at index "+ finalI, Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(getActivity(), "Clicked at index "+ finalI, Toast.LENGTH_SHORT).show();
                     switch (finalI){
                         case 0:
 //                            startActivity(new Intent(getActivity(), praposal_recycler.class));
+                            Bundle bundle = new Bundle();
+                            bundle.putString("userid","123456");
+//                            Log.i("tracking uid","in manager sending to minute ");
+
+                            Report_section report_section = new Report_section();
+                            report_section.setArguments(bundle);
+                            if(getActivity().getSupportFragmentManager().getBackStackEntryCount() > 1){
+                                getActivity().getSupportFragmentManager().popBackStack();
+                            }
+                            getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.containerID, report_section).addToBackStack(null).commit();
                                 break;
                         case 1:
 //                            Intent creative = new Intent(getActivity(), Creative.class);

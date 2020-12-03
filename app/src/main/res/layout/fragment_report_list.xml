@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragments.ReportList"
+    android:id="@+id/refresher">
+
+    <!-- TODO: Update blank fragment layout -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/report_list"
+        tools:context=".Manager">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view_RV"
+            android:layout_width="match_parent"
+            android:layout_height="672dp"
+            android:layout_below="@+id/search_bar"
+            android:layout_alignParentBottom="true"
+            android:layout_marginTop="-2dp"
+            android:layout_marginBottom="1dp">
+
+        </androidx.recyclerview.widget.RecyclerView>
+
+
+<!--        <Button-->
+<!--            android:id="@+id/add_button"-->
+<!--            android:layout_width="60dp"-->
+<!--            android:layout_height="60dp"-->
+<!--            android:layout_alignParentRight="true"-->
+<!--            android:layout_alignParentBottom="true"-->
+<!--            android:layout_marginRight="26dp"-->
+<!--            android:layout_marginBottom="44dp"-->
+<!--            android:background="@drawable/circular_button"-->
+<!--            android:text="+"-->
+<!--            android:textSize="25dp"-->
+<!--            android:textColor="@color/colorPrimary"-->
+<!--            android:textStyle="bold" />-->
+
+        <EditText
+            android:id="@+id/search_bar"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginStart="0dp"
+            android:layout_marginLeft="0dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginEnd="0dp"
+            android:layout_marginRight="0dp"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:hint="search"
+            android:drawableLeft="@drawable/ic_search_black_24dp"
+            android:drawablePadding="10dp"
+            android:paddingLeft="20dp"
+            android:drawableTint="@color/colorPrimary"
+            android:textColor="@color/colorPrimary"/>
+
+        <TextView
+            android:id="@+id/no_reports_yet"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginStart="25pt"
+            android:layout_marginLeft="25pt"
+            android:layout_marginTop="80dp"
+            android:layout_marginEnd="25pt"
+            android:layout_marginRight="25pt"
+            android:text="NO REPORTS YET !!"
+            android:textSize="30dp" />
+    </RelativeLayout>
+
+
+
+
+</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

@@ -185,16 +185,17 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onResponse(String response) {
                 Log.i("volleyABC", "onResponse:edit reached "+response);
+                String uid="";
+                try {
+                    JSONObject jsonObject1 = new JSONObject(response);
+                    uid = jsonObject1.getString("id");
+                }
+                catch (JSONException e) {
+                    e.printStackTrace();
+                }
                 Toast.makeText(RegisterActivity.this,"Registred Succesfully",Toast.LENGTH_SHORT).show();
-                preferenceConfig.writeLoginStatus(true,uemail,upass,uemail,ucontact,uaddress,ugender,udob);
-                    SharedPreferences.Editor editor=mpref.edit();
-                    editor.putString("useremail",uemail);
-                    editor.putString("password",upass);
-                    editor.putString("usercontact",ucontact);
-                    editor.putString("useraddress",uaddress);
-                    editor.putString("usergender",ugender);
-                    editor.putString("userdob",udob);
-                    editor.apply();
+                preferenceConfig.writeLoginStatus(true,uid,upass,uemail,ucontact,uaddress,ugender,udob);
+
                     Intent manager = new Intent(RegisterActivity.this, Manager.class);
                     startActivity(manager);
                     finish();
@@ -204,16 +205,17 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
                 try{
-//                    String statusCode = String.valueOf(error.networkResponse.statusCode);
-                    Log.i("volleyABC" ,"volley error"+error.toString());
-                    if(error.networkResponse.statusCode==400) {
+                    Toast.makeText(RegisterActivity.this,"Error"+error.toString(),Toast.LENGTH_SHORT).show();
+
+                    if(error.networkResponse.statusCode == 400) {
                         Toast.makeText(RegisterActivity.this, "Email already Registred!!", Toast.LENGTH_SHORT).show();
                     }
-                    error.printStackTrace();}
+                    error.printStackTrace();
+                }
                 catch (Exception e)
                 {
                     Log.i("volleyABC" ,"exception"+e.toString());
-                    Toast.makeText(RegisterActivity.this,"Check Network",Toast.LENGTH_SHORT).show();}
+                    Toast.makeText(RegisterActivity.this,"Check Network"+e.toString(),Toast.LENGTH_LONG).show();}
             }
         }){
 

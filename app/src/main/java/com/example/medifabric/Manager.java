@@ -58,15 +58,11 @@ public class Manager extends AppCompatActivity implements NavigationView.OnNavig
         //get data sent by Mainactivity.java startsact
         Intent intent = getIntent();
 //        uid = intent.getStringExtra(MainActivity.EXTRA_UID);
-        uid=preferenceConfig.readLoginStatus();
-        uid="test";
-        Log.i("tracking uid","manager when received "+uid);
-
-
-        uname=preferenceConfig.read_userid();
+        uname=preferenceConfig.read_email();
         urole=preferenceConfig.read_email();
+        uid=preferenceConfig.read_userid();
         uProfile=preferenceConfig.read_contact();
-//        uname=urole=uProfile="tets";
+
         Log.i("tracking uid","manager when received "+uid+uname+urole+uProfile);
         //get data sent by Mainactivity.java ends
 

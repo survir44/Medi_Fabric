@@ -151,12 +151,19 @@ public class MainActivity extends AppCompatActivity {
             public void onResponse(String response) {
 
                 Log.i("volleyABC" ,"got response    "+response);
+                String uid="";
+                try {
+                    JSONObject jsonObject1 = new JSONObject(response);
+                     uid = jsonObject1.getString("id");
+
+                }
+                catch (JSONException e) {
+                    e.printStackTrace();
+                }
                 Toast.makeText(MainActivity.this, "Logged IN", Toast.LENGTH_SHORT).show();
 
                 SharedPreferences.Editor editor=mpref.edit();
-                    editor.putString("useremail",uemail);
-                    editor.putString("password",upass);
-                    editor.apply();
+                preferenceConfig.writeLoginStatus(true,uid,upass,uemail,"","","","");
                     Intent manager = new Intent(MainActivity.this, Manager.class);
                     startActivity(manager);
                     finish();
