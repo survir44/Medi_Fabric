@@ -33,7 +33,7 @@
 
 - [Android Studio](https://developer.android.com/studio) - Android Studio provides the fastest tools for building apps on every type of Android device.
 - [NodeJs](https://nodejs.org/en/) - Node.js® is a JavaScript runtime built on Chrome's V8 JavaScript engine.
-- [MySQL](https://www.mysql.com) - The world's most popular open source database .
+- [MySQL](https://www.mysql.com) - The world's most popular open source database.
 
 ## Team
 
