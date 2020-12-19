@@ -19,5 +19,5 @@
 ## Team
 
  [<img src="https://raw.githubusercontent.com/CSI-DBIT/CSI-ManagementSystem/master/Android/app/src/main/res/drawable/saurabh.png" alt="Saurabh's Pic" width="120">](https://github.com/survir44)| [<img src="https://raw.githubusercontent.com/CSI-DBIT/CSI-ManagementSystem/master/Android/app/src/main/res/drawable/viraj.png" alt="Sanket's Pic" width="120">](https://github.com/vraj72) |[<img src="https://github.com/vraj72/V-victory/blob/master/Project/public/images/IMG_20190809_142653.png" alt="Ishmeet's Pic" width="120">](https://github.com/MarwinSequeira)
-|:---:|:---:|
+|:---:|:---:|:---:|
 |[Saurabh Yadav](https://github.com/survir44) |[Viraj tandel](https://github.com/vraj72) ||[Winston Sequeira](https://github.com/MarwinSequeira)
