@@ -9,6 +9,25 @@
 </tr>
 </table>
 
+## Design Interface
+
+[
+<img src="https://github.com/vraj72/Medi_Fabric/blob/master/images/s2.jpeg" alt="Saurabh's Pic" width="120">
+<img src="https://github.com/vraj72/Medi_Fabric/blob/master/images/s1.jpeg" alt="Saurabh's Pic" width="120">
+<img src="https://github.com/vraj72/Medi_Fabric/blob/master/images/s3.jpeg" alt="Saurabh's Pic" width="120">
+]
+
+[
+<img src="https://github.com/vraj72/Medi_Fabric/blob/master/images/s4.jpeg" alt="Saurabh's Pic" width="120">
+<img src="https://github.com/vraj72/Medi_Fabric/blob/master/images/s5.jpeg" alt="Saurabh's Pic" width="120">
+<img src="https://github.com/vraj72/Medi_Fabric/blob/master/images/s6.jpeg" alt="Saurabh's Pic" width="120">
+]
+
+[
+<img src="https://github.com/vraj72/Medi_Fabric/blob/master/images/s7.jpeg" alt="Saurabh's Pic" width="120">
+<img src="https://github.com/vraj72/Medi_Fabric/blob/master/images/s8.jpeg" alt="Saurabh's Pic" width="120">
+<img src="https://github.com/vraj72/Medi_Fabric/blob/master/images/s1.jpeg" alt="Saurabh's Pic" width="120">
+]
 
 ## Built with 
 
