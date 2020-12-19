@@ -24,25 +24,30 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import com.example.medifabric.fragments.Feedback;
 import com.google.android.material.navigation.NavigationView;
 import com.example.medifabric.SharedPreferenceConfig;
+import com.example.medifabric.fragments.profile;
+import com.squareup.picasso.Picasso;
 
 
 //This contains java code for navigation drawer activity
 
 public class Manager extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-
-
-
-
-    String uid, uname, urole, uProfile;
-
+    String uid, uname, urole, uProfile,profileurl;
     TextView UNAME, UID, UROLE;
     View mView;
     ImageView imageView;
     Handler handler;
     SharedPreferenceConfig preferenceConfig;
+    Toolbar toolbar;
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        toolbar.setTitle("Manager");
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,16 +57,18 @@ public class Manager extends AppCompatActivity implements NavigationView.OnNavig
         navigationView.setCheckedItem(R.id.nav_activity_manager);
         preferenceConfig = new SharedPreferenceConfig(getApplicationContext());  //....6/6/2019
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        toolbar.setTitle("Manger");
 
         //get data sent by Mainactivity.java startsact
         Intent intent = getIntent();
 //        uid = intent.getStringExtra(MainActivity.EXTRA_UID);
-        uname=preferenceConfig.read_email();
+        uname=preferenceConfig.read_username();
         urole=preferenceConfig.read_email();
         uid=preferenceConfig.read_userid();
         uProfile=preferenceConfig.read_contact();
+        profileurl=preferenceConfig.read_uprofileurl();
 
         Log.i("tracking uid","manager when received "+uid+uname+urole+uProfile);
         //get data sent by Mainactivity.java ends
@@ -87,7 +94,7 @@ public class Manager extends AppCompatActivity implements NavigationView.OnNavig
         navigationView.setNavigationItemSelectedListener(this);
 
         imageView = navigationView.getHeaderView(0).findViewById(R.id.imageView);
-//        loadImageUrl(uProfile);
+        loadImageUrl(profileurl);
 
         if(savedInstanceState == null)
         {
@@ -109,23 +116,23 @@ public class Manager extends AppCompatActivity implements NavigationView.OnNavig
      public void setSupportActionBar(Toolbar toolbar) {
     }
 
-//    private void loadImageUrl(String url) {
-//        Picasso.with(this).load(url).placeholder(R.mipmap.ic_launcher)
-//                .error(R.mipmap.ic_launcher)
-//                .into(imageView, new com.squareup.picasso.Callback(){
-//
-//                    @Override
-//                    public void onSuccess() {
-//
-//                    }
-//
-//                    @Override
-//                    public void onError() {
-//
-//                    }
-//                });
-//
-//    }
+    void loadImageUrl(String url) {
+        Picasso.get().load(url).placeholder(R.mipmap.ic_launcher)
+                .error(R.mipmap.ic_launcher)
+                .into(imageView, new com.squareup.picasso.Callback(){
+
+                    @Override
+                    public void onSuccess() {
+                        Log.i("picasso", "got response");
+                    }
+
+                    @Override
+                    public void onError(Exception e) {
+                        Log.i("picasso", "got error "+e.toString());
+
+                    }
+                });
+    }
 
     //below mathod id used to close the drawer... if its is open while pressing backpress key
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
@@ -175,6 +182,17 @@ public class Manager extends AppCompatActivity implements NavigationView.OnNavig
         int id = item.getItemId();
         if (id == R.id.nav_profile) {
 
+            Bundle bundle = new Bundle();
+            bundle.putString("userid","123456");
+//                            Log.i("tracking uid","in manager sending to minute ");
+
+            profile profile_f = new profile();
+            profile_f.setArguments(bundle);
+            if(getSupportFragmentManager().getBackStackEntryCount() > 1){
+                getSupportFragmentManager().popBackStack();
+            }
+            getSupportFragmentManager().beginTransaction().replace(R.id.containerID, profile_f).addToBackStack(null).commit();
+
         } else if (id == R.id.nav_activity_manager) {
             //Toast.makeText(Manager.this,String.valueOf(getSupportFragmentManager().getBackStackEntryCount()),Toast.LENGTH_SHORT).show();
             if(getSupportFragmentManager().getBackStackEntryCount() > 1){
@@ -189,6 +207,12 @@ public class Manager extends AppCompatActivity implements NavigationView.OnNavig
         } else if (id == R.id.nav_developers) {
 
         } else if (id == R.id.nav_Feedback) {
+            Feedback feedback = new Feedback();
+            if(getSupportFragmentManager().getBackStackEntryCount() > 1){
+                getSupportFragmentManager().popBackStack();
+            }
+            getSupportFragmentManager().beginTransaction().replace(R.id.containerID, feedback).addToBackStack(null).commit();
+
 
 
         } else if (id == R.id.nav_about_us) {
@@ -196,7 +220,7 @@ public class Manager extends AppCompatActivity implements NavigationView.OnNavig
 
         } else if (id == R.id.log_out) {
             //....6/6/2019
-            preferenceConfig.writeLoginStatus(false,uname,"",uname,"","","","");
+            preferenceConfig.writeLoginStatus(false,"","",urole,"","","","","","","","");
             startActivity(new Intent(this, MainActivity.class));
             finish();
             //....6/6/2019
@@ -207,5 +231,8 @@ public class Manager extends AppCompatActivity implements NavigationView.OnNavig
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+    public void setActionBarTitle(String title) {
+        toolbar.setTitle(title);
     }
 }

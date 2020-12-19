@@ -17,7 +17,7 @@ public class SharedPreferenceConfig {
 
     }
 
-    public void writeLoginStatus(boolean status, String uid, String pwd, String uemail, String ucontact, String uaddres, String ugender, String dob){
+    public void writeLoginStatus(boolean status, String uid, String pwd, String uemail, String ucontact, String uaddres, String ugender, String dob,String name, String pubkey, String privkey,String uprofileurl){
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString("userid",uid);
         editor.putString("password",pwd);
@@ -26,6 +26,10 @@ public class SharedPreferenceConfig {
         editor.putString("useraddress",uaddres);
         editor.putString("usergender",ugender);
         editor.putString("userdob",dob);
+        editor.putString("username",name);
+        editor.putString("PublicKey",pubkey);
+        editor.putString("PrivateKey",privkey);
+        editor.putString("profileURL",uprofileurl);
         editor.apply();
         //editor.putBoolean(context.getResources().getString(R.string.login_status_preference), status);
         // editor.commit();
@@ -49,6 +53,15 @@ public class SharedPreferenceConfig {
     public String read_userid(){
         return sharedPreferences.getString("userid","");
     }
+    public String read_username(){
+        return sharedPreferences.getString("username","");
+    }
+    public String read_userpubk(){
+        return sharedPreferences.getString("PublicKey","");
+    }
+    public String read_userprik(){
+        return sharedPreferences.getString("PrivateKey","");
+    }
 
     public String read_password(){
         return sharedPreferences.getString("password","");
@@ -71,5 +84,6 @@ public class SharedPreferenceConfig {
     public String read_dob(){
         return sharedPreferences.getString("userdob","");
     }
+    public String read_uprofileurl(){ return sharedPreferences.getString("profileURL","");}
 
 }

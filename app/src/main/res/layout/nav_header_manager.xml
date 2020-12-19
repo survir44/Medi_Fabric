@@ -12,7 +12,7 @@
     android:paddingTop="35dp"
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
-    <androidx.appcompat.widget.AppCompatImageButton
+    <com.joooonho.SelectableRoundedImageView
         android:id="@+id/imageView"
         android:layout_width="100dp"
         android:layout_height="100dp"
@@ -21,7 +21,13 @@
         android:layout_marginTop="15dp"
         android:paddingTop="1dp"
         android:scaleType="centerCrop"
-        app:srcCompat="@drawable/ic_launcher_background"
+        app:srcCompat="@drawable/ic_person_black_24dp"
+        app:sriv_oval="true"
+        android:layout_centerHorizontal="true"
+        app:sriv_left_bottom_corner_radius="50dp"
+        app:sriv_left_top_corner_radius="50dp"
+        app:sriv_right_bottom_corner_radius="50dp"
+        app:sriv_right_top_corner_radius="50dp"
         tools:ignore="VectorDrawableCompat"
 
         />

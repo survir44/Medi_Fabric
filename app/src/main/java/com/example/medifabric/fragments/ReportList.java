@@ -119,6 +119,22 @@ public class ReportList extends Fragment implements ExampleAdapter.OnItemClicked
 //        Toast.makeText(getActivity(), "clicked"+userid+uname+report_section, Toast.LENGTH_SHORT).show();
 
     }
+    @Override
+    public void onDestroyView(){
+        super.onDestroyView();
+        ((Manager) getContext()).setActionBarTitle("Manager");
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+
+        // Set title bar
+//        ( getActivity()).setActionBarTitle("Your title");
+        ((Manager) getContext()).setActionBarTitle("Report Section");
+
+
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

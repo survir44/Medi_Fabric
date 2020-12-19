@@ -57,8 +57,8 @@ public class MainActivity extends AppCompatActivity {
         uemail_r=(EditText) findViewById(R.id.userid_l);
         upass_r=(EditText) findViewById(R.id.password_l);
 
-        mpref=getSharedPreferences("",MODE_PRIVATE);
-        String stored_usremail=mpref.getString("useremail","");
+
+        String stored_usremail=preferenceConfig.read_email();
         uemail_r.setText(stored_usremail);
         Log.i("shared pref","stored email"+stored_usremail);
 
@@ -151,10 +151,13 @@ public class MainActivity extends AppCompatActivity {
             public void onResponse(String response) {
 
                 Log.i("volleyABC" ,"got response    "+response);
-                String uid="";
+                String uid="",name="",pubkey="",prikey="";
                 try {
                     JSONObject jsonObject1 = new JSONObject(response);
                      uid = jsonObject1.getString("id");
+                     name=jsonObject1.getString("name");
+                     pubkey=jsonObject1.getString("public");
+                     prikey=jsonObject1.getString("private");
 
                 }
                 catch (JSONException e) {
@@ -162,8 +165,8 @@ public class MainActivity extends AppCompatActivity {
                 }
                 Toast.makeText(MainActivity.this, "Logged IN", Toast.LENGTH_SHORT).show();
 
-                SharedPreferences.Editor editor=mpref.edit();
-                preferenceConfig.writeLoginStatus(true,uid,upass,uemail,"","","","");
+
+                preferenceConfig.writeLoginStatus(true,uid,upass,uemail,"","","","",name,pubkey,prikey,"http://134.209.152.226:8000/images/"+uid+".jpg");
                     Intent manager = new Intent(MainActivity.this, Manager.class);
                     startActivity(manager);
                     finish();

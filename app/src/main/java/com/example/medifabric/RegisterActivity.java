@@ -25,6 +25,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.android.volley.DefaultRetryPolicy;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -71,6 +72,8 @@ public class RegisterActivity extends AppCompatActivity {
     Pattern date_pattern = Pattern.compile("[0-9]{4}-[0-9]{2}-[0-9]{2}");
     private SharedPreferences mpref;
     private SharedPreferenceConfig preferenceConfig;
+    private Integer flag=0,count=0;
+    RequestQueue requestQueue;
 
 
 
@@ -81,6 +84,9 @@ public class RegisterActivity extends AppCompatActivity {
 
         preferenceConfig = new SharedPreferenceConfig(getApplicationContext());
         mpref=getSharedPreferences("",MODE_PRIVATE);
+
+        requestQueue= Volley.newRequestQueue(this);
+
 
         uname_r = (EditText) findViewById(R.id.name_r);
         uemail_r = (EditText) findViewById(R.id.email_r);
@@ -146,7 +152,7 @@ public class RegisterActivity extends AppCompatActivity {
                     Toast.makeText(RegisterActivity.this,"Confirm password feild empty ",Toast.LENGTH_SHORT).show();
                 }else if(!upass.equals(uconfirmpass)){
                     Toast.makeText(RegisterActivity.this,"Enter correct password",Toast.LENGTH_SHORT).show();
-                }else{
+                }else if(flag==0){
                  createJson_send();
                 }
             }
@@ -159,6 +165,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     
     private void createJson_send(){
+        flag = 1;
 
         final JSONObject jsonObject = new JSONObject();
         try {
@@ -184,17 +191,21 @@ public class RegisterActivity extends AppCompatActivity {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, server_url+"/register", new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
+                flag=0;
                 Log.i("volleyABC", "onResponse:edit reached "+response);
-                String uid="";
+                String uid="",name="",pubkey="",prikey="";
                 try {
                     JSONObject jsonObject1 = new JSONObject(response);
                     uid = jsonObject1.getString("id");
+                    name=jsonObject1.getString("name");
+                    pubkey=jsonObject1.getString("public");
+                    prikey=jsonObject1.getString("private");
                 }
                 catch (JSONException e) {
                     e.printStackTrace();
                 }
                 Toast.makeText(RegisterActivity.this,"Registred Succesfully",Toast.LENGTH_SHORT).show();
-                preferenceConfig.writeLoginStatus(true,uid,upass,uemail,ucontact,uaddress,ugender,udob);
+                preferenceConfig.writeLoginStatus(true,uid,upass,uemail,ucontact,uaddress,ugender,udob,name,pubkey,prikey,"http://134.209.152.226:8000/images/"+uid+".jpg");
 
                     Intent manager = new Intent(RegisterActivity.this, Manager.class);
                     startActivity(manager);
@@ -204,6 +215,7 @@ public class RegisterActivity extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                flag=0;
                 try{
                     Toast.makeText(RegisterActivity.this,"Error"+error.toString(),Toast.LENGTH_SHORT).show();
 
@@ -234,89 +246,95 @@ public class RegisterActivity extends AppCompatActivity {
                 return "application/json";
             }
         };
-        RequestQueue requestQueue= Volley.newRequestQueue(this);
-//        RequestQueue requestQueue= Volley.newRequestQueue(this, new HurlStack(null, getSocketFactory()));
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(0, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        count++;
+//        Toast.makeText(RegisterActivity.this,"sending request count"+count.toString(),Toast.LENGTH_SHORT).show();
+
         requestQueue.add(stringRequest);
+        Log.i("volleyABC", "addd string request ");
+
+
     }
 
-    private SSLSocketFactory getSocketFactory() {
-
-        CertificateFactory cf = null;
-        try {
-
-            cf = CertificateFactory.getInstance("X.509");
-            InputStream caInput = getResources().openRawResource(R.raw.cert_name);
-            Certificate ca;
-            try {
-
-                ca = cf.generateCertificate(caInput);
-//                Log.e("CERT", "ca=" + ((X509Certificate) ca).getSubjectDN());
-            } finally {
-                caInput.close();
-            }
-
-
-            String keyStoreType = KeyStore.getDefaultType();
-            KeyStore keyStore = KeyStore.getInstance(keyStoreType);
-            keyStore.load(null, null);
-            keyStore.setCertificateEntry("ca", ca);
-
-
-            String tmfAlgorithm = TrustManagerFactory.getDefaultAlgorithm();
-            TrustManagerFactory tmf = TrustManagerFactory.getInstance(tmfAlgorithm);
-            tmf.init(keyStore);
-
-
-            HostnameVerifier hostnameVerifier = new HostnameVerifier() {
-                @Override
-                public boolean verify(String hostname, SSLSession session) {
-
-                    Log.e("CipherUsed", session.getCipherSuite());
-//                    return hostname.compareTo("134.209.152.226")==0; //The Hostname of your server.
-                    return  true;
-
-                }
-            };
-
-
-            HttpsURLConnection.setDefaultHostnameVerifier(hostnameVerifier);
-            SSLContext context = null;
-            context = SSLContext.getInstance("TLS");
-
-//            HttpsURLConnection.setDefaultHostnameVerifier((hostname, sslSession) -> {
-//                if(hostname.equals("134.209.152.226")) return true;
-//                return false;
-//            });
-
-            context.init(null, tmf.getTrustManagers(), null);
-            HttpsURLConnection.setDefaultSSLSocketFactory(context.getSocketFactory());
-
-            SSLSocketFactory sf = context.getSocketFactory();
-
-
-            return sf;
-
-        } catch (CertificateException e) {
-            e.printStackTrace();
-        }
-         catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        }
-        catch (KeyStoreException e) {
-            e.printStackTrace();
-        }
-        catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        catch (IOException e) {
-            e.printStackTrace();
-        }
-        catch (KeyManagementException e) {
-            e.printStackTrace();
-        }
-
-        return  null;
-    }
+//        RequestQueue requestQueue= Volley.newRequestQueue(this, new HurlStack(null, getSocketFactory()));
+//    private SSLSocketFactory getSocketFactory() {
+//
+//        CertificateFactory cf = null;
+//        try {
+//
+//            cf = CertificateFactory.getInstance("X.509");
+//            InputStream caInput = getResources().openRawResource(R.raw.cert_name);
+//            Certificate ca;
+//            try {
+//
+//                ca = cf.generateCertificate(caInput);
+////                Log.e("CERT", "ca=" + ((X509Certificate) ca).getSubjectDN());
+//            } finally {
+//                caInput.close();
+//            }
+//
+//
+//            String keyStoreType = KeyStore.getDefaultType();
+//            KeyStore keyStore = KeyStore.getInstance(keyStoreType);
+//            keyStore.load(null, null);
+//            keyStore.setCertificateEntry("ca", ca);
+//
+//
+//            String tmfAlgorithm = TrustManagerFactory.getDefaultAlgorithm();
+//            TrustManagerFactory tmf = TrustManagerFactory.getInstance(tmfAlgorithm);
+//            tmf.init(keyStore);
+//
+//
+//            HostnameVerifier hostnameVerifier = new HostnameVerifier() {
+//                @Override
+//                public boolean verify(String hostname, SSLSession session) {
+//
+//                    Log.e("CipherUsed", session.getCipherSuite());
+////                    return hostname.compareTo("134.209.152.226")==0; //The Hostname of your server.
+//                    return  true;
+//
+//                }
+//            };
+//
+//
+//            HttpsURLConnection.setDefaultHostnameVerifier(hostnameVerifier);
+//            SSLContext context = null;
+//            context = SSLContext.getInstance("TLS");
+//
+////            HttpsURLConnection.setDefaultHostnameVerifier((hostname, sslSession) -> {
+////                if(hostname.equals("134.209.152.226")) return true;
+////                return false;
+////            });
+//
+//            context.init(null, tmf.getTrustManagers(), null);
+//            HttpsURLConnection.setDefaultSSLSocketFactory(context.getSocketFactory());
+//
+//            SSLSocketFactory sf = context.getSocketFactory();
+//
+//
+//            return sf;
+//
+//        } catch (CertificateException e) {
+//            e.printStackTrace();
+//        }
+//         catch (NoSuchAlgorithmException e) {
+//            e.printStackTrace();
+//        }
+//        catch (KeyStoreException e) {
+//            e.printStackTrace();
+//        }
+//        catch (FileNotFoundException e) {
+//            e.printStackTrace();
+//        }
+//        catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        catch (KeyManagementException e) {
+//            e.printStackTrace();
+//        }
+//
+//        return  null;
+//    }
 
 
 

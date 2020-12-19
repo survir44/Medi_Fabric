@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.medifabric.Manager;
 import com.example.medifabric.R;
 
 /**
@@ -58,6 +59,22 @@ public class Report_section extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+    }
+    @Override
+    public void onDestroyView(){
+        super.onDestroyView();
+        ((Manager) getContext()).setActionBarTitle("Manager");
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+
+        // Set title bar
+//        ( getActivity()).setActionBarTitle("Your title");
+        ((Manager) getContext()).setActionBarTitle("Report Section");
+
+
     }
 
     @Override

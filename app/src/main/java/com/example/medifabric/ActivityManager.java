@@ -18,6 +18,7 @@ import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.medifabric.fragments.Report_section;
+import com.example.medifabric.fragments.profile;
 
 import java.util.Objects;
 import java.util.TimerTask;
@@ -50,8 +51,8 @@ public class ActivityManager extends Fragment {
         getActivity().setTitle("Activity Manager");
         mainGrid = (GridLayout) rootView.findViewById(R.id.mainGrid);
 
-        viewPager = (ViewPager) rootView.findViewById(R.id.viewPager);
-        viewPager.setPageTransformer(true, new DepthPageTransformer());
+//        viewPager = (ViewPager) rootView.findViewById(R.id.viewPager);
+//        viewPager.setPageTransformer(true, new DepthPageTransformer());
 
 //        Bundle bundle = getArguments();
 //        Log.i("Sanket_testing",bundle.toString());
@@ -71,38 +72,38 @@ public class ActivityManager extends Fragment {
 
 
     // image slider animation
-    public static class DepthPageTransformer implements ViewPager.PageTransformer {
-       @Override
-       public void transformPage(View page, float position) {
-
-           if (position < -1){    // [-Infinity,-1)
-               // This page is way off-screen to the left.
-               page.setAlpha(0);
-
-           }
-           else if (position <= 0){    // [-1,0]
-               page.setAlpha(1);
-               page.setTranslationX(0);
-               page.setScaleX(1);
-               page.setScaleY(1);
-
-           }
-           else if (position <= 1){    // (0,1]
-               page.setTranslationX(-position*page.getWidth());
-               page.setAlpha(1- Math.abs(position));
-               page.setScaleX(1- Math.abs(position));
-               page.setScaleY(1- Math.abs(position));
-
-           }
-           else {    // (1,+Infinity]
-               // This page is way off-screen to the right.
-               page.setAlpha(0);
-
-           }
-
-
-       }
-    }
+//    public static class DepthPageTransformer implements ViewPager.PageTransformer {
+//       @Override
+//       public void transformPage(View page, float position) {
+//
+//           if (position < -1){    // [-Infinity,-1)
+//               // This page is way off-screen to the left.
+//               page.setAlpha(0);
+//
+//           }
+//           else if (position <= 0){    // [-1,0]
+//               page.setAlpha(1);
+//               page.setTranslationX(0);
+//               page.setScaleX(1);
+//               page.setScaleY(1);
+//
+//           }
+//           else if (position <= 1){    // (0,1]
+//               page.setTranslationX(-position*page.getWidth());
+//               page.setAlpha(1- Math.abs(position));
+//               page.setScaleX(1- Math.abs(position));
+//               page.setScaleY(1- Math.abs(position));
+//
+//           }
+//           else {    // (1,+Infinity]
+//               // This page is way off-screen to the right.
+//               page.setAlpha(0);
+//
+//           }
+//
+//
+//       }
+//    }
 // animation ends here
 
 
@@ -157,36 +158,36 @@ public class ActivityManager extends Fragment {
 //
 //    }
 
-    public class MyTimeTask extends TimerTask {
-
-        @Override
-        public void run() {
-
-           Objects.requireNonNull(getActivity()).runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-
-                    if (viewPager.getCurrentItem() == 0){
-                        viewPager.setCurrentItem(1);
-                    } else if(viewPager.getCurrentItem() == 1){
-                        viewPager.setCurrentItem(2);
-                    } else if(viewPager.getCurrentItem() == 2){
-                        viewPager.setCurrentItem(3);
-                    } else if(viewPager.getCurrentItem() == 3){
-                        viewPager.setCurrentItem(4);
-                    } else if(viewPager.getCurrentItem() == 4){
-                        viewPager.setCurrentItem(5);
-                    } else if(viewPager.getCurrentItem() == 5){
-                        viewPager.setCurrentItem(6);
-                    } else if(viewPager.getCurrentItem() == 6){
-                        viewPager.setCurrentItem(0);
-                    }
-
-                }
-            });
-
-        }
-    }
+//    public class MyTimeTask extends TimerTask {
+//
+//        @Override
+//        public void run() {
+//
+//           Objects.requireNonNull(getActivity()).runOnUiThread(new Runnable() {
+//                @Override
+//                public void run() {
+//
+//                    if (viewPager.getCurrentItem() == 0){
+//                        viewPager.setCurrentItem(1);
+//                    } else if(viewPager.getCurrentItem() == 1){
+//                        viewPager.setCurrentItem(2);
+//                    } else if(viewPager.getCurrentItem() == 2){
+//                        viewPager.setCurrentItem(3);
+//                    } else if(viewPager.getCurrentItem() == 3){
+//                        viewPager.setCurrentItem(4);
+//                    } else if(viewPager.getCurrentItem() == 4){
+//                        viewPager.setCurrentItem(5);
+//                    } else if(viewPager.getCurrentItem() == 5){
+//                        viewPager.setCurrentItem(6);
+//                    } else if(viewPager.getCurrentItem() == 6){
+//                        viewPager.setCurrentItem(0);
+//                    }
+//
+//                }
+//            });
+//
+//        }
+//    }
 
     private void setSingleEvent(GridLayout mainGrid) {
         //Loop all child item of Main Grid
@@ -202,7 +203,7 @@ public class ActivityManager extends Fragment {
                         case 0:
 //                            startActivity(new Intent(getActivity(), praposal_recycler.class));
                             Bundle bundle = new Bundle();
-                            bundle.putString("userid","123456");
+//                            bundle.putString("userid",);
 //                            Log.i("tracking uid","in manager sending to minute ");
 
                             Report_section report_section = new Report_section();
@@ -222,8 +223,16 @@ public class ActivityManager extends Fragment {
 //                            startActivity(new Intent(getActivity(), publcity_recycler.class));
                             break;
                         case 3:
-//                            startActivity(new Intent(getActivity(), Technical.class));
-                            break;
+                            Bundle bundle_f = new Bundle();
+                            bundle_f.putString("userid","123456");
+//                            Log.i("tracking uid","in manager sending to minute ");
+
+                            profile profile_f = new profile();
+                            profile_f.setArguments(bundle_f);
+                            if(getActivity().getSupportFragmentManager().getBackStackEntryCount() > 1){
+                                getActivity().getSupportFragmentManager().popBackStack();
+                            }
+                            getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.containerID, profile_f).addToBackStack(null).commit();break;
                         case 4:
 //                            startActivity(new Intent(getActivity(), DisplayEventName.class));
                             break;
@@ -239,4 +248,6 @@ public class ActivityManager extends Fragment {
     public String toString() {
         return "Activity Manager";
     }
+
+
 }
